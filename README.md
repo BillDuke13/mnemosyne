@@ -2,17 +2,18 @@
 
 This demo shows the end-to-end flow for the Mnemosyne concept: a mock camera frame is “recognized” (no real Azure call), the recognized label is used to retrieve real on-chain memory metadata from Sui devnet and real memory content from Walrus testnet, then a prompt is rendered in the UI (and optionally spoken via macOS `say`).
 
-## Deployed chain state (devnet)
+## Deployed chain state (testnet)
 
-- Package ID: `0x19df5b99556a1f786f9ed4bfe27ad649d7983c289747ed733e77dc84dfea4e47`
-- MemoryBook ID (shared object): `0x8d11465046cb5e6f428051270d0cc636e06559066c16630ccd26a0609bf86f3b`
-- Table ID (entries): `0xd94e3cf9b373f99d5f8eedec94489d022d0838c248e35d1e0ad74618fc5e589b`
+- Package ID: `0x1c8db13f154371b87806ae5a54cf1d6e35c650a5b7ebae8c76f181e31dcc05be`
+- MemoryBook ID (shared object): `0x5acdf1b6fc224fc054f014c153780439b417b5e8609ca02e3ff1ea7bacaf0726`
+- Table ID (entries): `0x408592353531f028f9f6a4377bbacaba4ea3acca1121234fb55c3482da4c3ea3`
 - Entry map (ID → Walrus blob):
-  - `0` (Family1-Dad) → `GohF9F8Um8zUdu3QyZdBw5BcjqI9nx5Oladod6GMIBk`
-  - `1` (Family1-Mom) → `fegNUuP9T8Z1XVJGITjjAM3HD9-FM6OHPjH5R19wRRY`
-  - `2` (Family1-Son) → `Gf0xoarmeZMB_fpyor2818hsz4GLEcghGQ8uBHuLgIM`
+  - `0` (Family1-Dad) → `GohF9F8Um8zUdu3QyZdBw5BcjqI9nx5Oladod6GMIBk` (hash `6660eb78937dad3a1f6774426da335821832f2c6719cd0491372b6a4e2399fc6`)
+  - `1` (Family1-Mom) → `fegNUuP9T8Z1XVJGITjjAM3HD9-FM6OHPjH5R19wRRY` (hash `4f05a52a39e2d0603ee8239980a9ad8a4c809d6fac5ae0d80f0430d77eefda28`)
+  - `2` (Family1-Son) → `Gf0xoarmeZMB_fpyor2818hsz4GLEcghGQ8uBHuLgIM` (hash `7a278bcc9044e43dc1803a7ab10ce41e0c249d7a8bcc7f1c18673ab04f4e0096`)
 
-Walrus aggregator: `https://aggregator.walrus-testnet.walrus.space`
+Walrus aggregator: `https://aggregator.walrus-testnet.walrus.space`  
+Sui RPC (testnet): `https://fullnode.testnet.sui.io`
 
 ## Quick start
 
@@ -23,7 +24,7 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-Open `http://localhost:8000` to use the camera mock. Click **Start Camera**, then **Identify**. Selecting a face hint will map directly to the entry; leaving it blank cycles through the on-chain entries in order.
+Open `http://localhost:8000` to use the sample portrait mock (no real camera). Choose a portrait (Dad/Mom/Son) and click **Identify**; the backend reads testnet MemoryBook and Walrus blobs, then renders the memory prompt.
 
 ## What happens on Identify
 
@@ -35,10 +36,10 @@ Open `http://localhost:8000` to use the camera mock. Click **Start Camera**, the
 ## Environment overrides
 
 ```
-MNEMOSYNE_PACKAGE_ID=<pkg>
-MNEMOSYNE_BOOK_ID=<object_id>
-MNEMOSYNE_TABLE_ID=<table_id>
-SUI_RPC=https://fullnode.devnet.sui.io
+MNEMOSYNE_PACKAGE_ID=0x1c8db13f154371b87806ae5a54cf1d6e35c650a5b7ebae8c76f181e31dcc05be
+MNEMOSYNE_BOOK_ID=0x5acdf1b6fc224fc054f014c153780439b417b5e8609ca02e3ff1ea7bacaf0726
+MNEMOSYNE_TABLE_ID=0x408592353531f028f9f6a4377bbacaba4ea3acca1121234fb55c3482da4c3ea3
+SUI_RPC=https://fullnode.testnet.sui.io
 WALRUS_AGGREGATOR=https://aggregator.walrus-testnet.walrus.space
 MNEMOSYNE_ENTRY_HINTS='{"Family1-Dad":0,"Family1-Mom":1,"Family1-Son":2}'
 ENABLE_TTS=true   # enables macOS `say`
