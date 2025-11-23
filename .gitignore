@@ -1,0 +1,10 @@
+.serena/
+.prompts/
+logs/
+.venv/
+__pycache__/
+.DS_Store
+.sui/
+.sui_config/
+*.log
+AGENTS.md
