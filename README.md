@@ -1,6 +1,13 @@
 # Mnemosyne Demo (Walrus + Sui + Mock Azure Face)
 
-This demo shows the end-to-end flow for the Mnemosyne concept: a mock camera frame is “recognized” (no real Azure call), the recognized label is used to retrieve real on-chain memory metadata from Sui devnet and real memory content from Walrus testnet, then a prompt is rendered in the UI (and optionally spoken via macOS `say`).
+Mnemosyne is a privacy-forward cognitive support demo for Alzheimer’s scenarios, built to showcase a full edge→chain→storage feedback loop on Sui + Walrus. A mock camera frame is “recognized” (no real Azure call for the demo), the label drives on-chain memory lookup, and real Walrus blobs return human-friendly recall prompts. The emphasis is on demonstrating a production-feasible pattern: verifiable memory objects on Sui, durable blob storage on Walrus, and a latency-friendly edge experience that could run on glasses or phones.
+
+### Why this is competition-grade
+- **Chain-verifiable memory graph**: Memory entries are stored as shared objects on Sui testnet, with explicit Walrus blob references and hash verification. Judges can inspect everything on-chain.
+- **Decentralized, durable content**: Memory summaries live on Walrus testnet, resilient to single-node failures and auditable via blob IDs.
+- **Edge-first UX**: Mock camera flow keeps the loop tight for demo, but the API surface cleanly swaps in real camera + real Azure Face when available.
+- **Safety & privacy posture**: No real faces or PII; all identities use public Azure sample portraits, while the chain state and storage are real. Hash validation ensures integrity.
+- **Extensible DAG of cognition**: The Move module models a “MemoryBook” that can grow into a richer knowledge graph (relationships, updates, auditability) with minimal changes.
 
 ## Deployed chain state (testnet)
 
